@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 CREATE TABLE users (
     user_id uuid DEFAULT uuid_generate_v4 (),
     first_name VARCHAR(50) NOT NULL,
@@ -22,7 +24,7 @@ CREATE TABLE lost_pets (
     latitude FLOAT NOT NULL,
     longitude FLOAT NOT NULL,
     lost_state BOOLEAN NOT NULL DEFAULT true,
-    user_id VARCHAR NOT NULL,
+    user_id uuid NOT NULL,
     PRIMARY KEY (lost_pet_id),
     CONSTRAINT lost_pets_user_id_fkey FOREIGN KEY (user_id)
         REFERENCES users (user_id) MATCH SIMPLE
@@ -39,7 +41,7 @@ CREATE TABLE found_pets (
     reported_date TIMESTAMP NOT NULL DEFAULT now(),
     latitude FLOAT NOT NULL,
     longitude FLOAT NOT NULL,
-    user_id VARCHAR NOT NULL,
+    user_id uuid NOT NULL,
     PRIMARY KEY (found_pet_id),
     CONSTRAINT found_pets_user_id_fkey FOREIGN KEY (user_id)
         REFERENCES users (user_id) MATCH SIMPLE
@@ -50,8 +52,8 @@ CREATE TABLE found_pets (
 );
 
 CREATE TABLE match_reported_pets (
-    lost_pet_id VARCHAR NOT NULL,
-    found_pet_id VARCHAR NOT NULL,
+    lost_pet_id uuid NOT NULL,
+    found_pet_id uuid NOT NULL,
     PRIMARY KEY (lost_pet_id, found_pet_id),
     CONSTRAINT match_reported_pets_lost_pet_id_fkey FOREIGN KEY (lost_pet_id)
         REFERENCES lost_pets (lost_pet_id) MATCH SIMPLE
@@ -63,7 +65,7 @@ CREATE TABLE match_reported_pets (
 
 CREATE TABLE flyers (
     flyer_id uuid DEFAULT uuid_generate_v4 (),
-    lost_pet_id VARCHAR NOT NULL,
+    lost_pet_id uuid NOT NULL,
     flyer_url VARCHAR NOT NULL,
     PRIMARY KEY (flyer_id),
     CONSTRAINT flyers_lost_pet_id_fkey FOREIGN KEY (lost_pet_id)
