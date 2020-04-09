@@ -58,4 +58,3 @@ CREATE TABLE flyers (
     PRIMARY KEY (flyer_id),
     CONSTRAINT flyers_lost_pet_id_fkey FOREIGN KEY (lost_pet_id) REFERENCES lost_pets (lost_pet_id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
 );
-
