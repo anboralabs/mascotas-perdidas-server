@@ -9,3 +9,5 @@ pluginManagement {
     }
 }
 rootProject.name='mascotas-perdidas-server'
+include 'data'
+include 'domain'
